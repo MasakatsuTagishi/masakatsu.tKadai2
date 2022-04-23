@@ -14,31 +14,34 @@ class ViewController: UIViewController {
     @IBOutlet private weak var label: UILabel!
 
     @IBAction private func pressButton(_ sender: UIButton) {
-        let calculate = Calculate()
+        let calculate = Calculator()
         let value1 = firstTextField.textToDouble ?? 0
         let value2 = secondTextField.textToDouble ?? 0
         let index = segmentedControl.selectedSegmentIndex
+
+        let resultText: String
         switch index {
         case 0:
-            label.text = String(calculate.addition(value1: value1, value2: value2))
+            resultText = String(calculate.add(value1: value1, value2: value2))
         case 1:
-            label.text = String(calculate.subtract(value1: value1, value2: value2))
+            resultText = String(calculate.subtract(value1: value1, value2: value2))
         case 2:
-            label.text = String(calculate.multiply(value1: value1, value2: value2))
+            resultText = String(calculate.multiply(value1: value1, value2: value2))
         case 3:
             if value2 == 0 {
-                label.text = "割る数には0以外を入力してください。"
+                resultText = "割る数には0以外を入力してください。"
             } else {
-                label.text = String(calculate.divide(value1: value1, value2: value2))
+                resultText = String(calculate.divide(value1: value1, value2: value2))
             }
         default:
-            label.text = "0"
+            fatalError("indexが異常です")
         }
+        label.text = resultText
     }
 }
 
-struct Calculate {
-    func addition(value1: Double, value2: Double) -> Double {
+struct Calculator {
+    func add(value1: Double, value2: Double) -> Double {
         value1 + value2
     }
 
